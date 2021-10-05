@@ -1,5 +1,5 @@
 RSpec.describe Dosespot::RestfulResource do
-  include_context 'with sandbox configuration'
+  include_context 'with staging configuration'
 
   context "#resource_base" do
     it "is an underscored pluralized version of the class name" do

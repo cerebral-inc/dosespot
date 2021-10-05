@@ -1,5 +1,5 @@
 RSpec.describe Dosespot::Resources::Patient do
-  include_context 'with sandbox configuration'
+  include_context 'with staging configuration'
 
   let(:resource_base_path) { "patient" }
   let(:arguments) { [] }

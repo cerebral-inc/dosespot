@@ -5,25 +5,29 @@ module Dosespot
 
   class Configuration
 
-    # [String] Environment to use - 'production' or 'sandbox'
+    # [String] Environment to use - 'production' or 'staging'. Most probably not used
     attr_reader :environment
     # [String] Client API Key (obtain from the Dosespot portal)
     attr_accessor :api_key
+    # [Integer] Clinic ID on the Dosespot side
+    attr_accessor :clinic_id
+    # [Integer] The pharmacy used by default
+    attr_accessor :default_pharmacy_id
 
     def initialize
-      # default to sandbox environment
-      @environment = :sandbox
+      # default to staging environment
+      @environment = :staging
     end
 
     def production?
       environment == :production
     end
 
-    def sandbox?
-      environment == :sandbox
+    def staging?
+      environment == :staging
     end
 
-    def environment=(environment = :sandbox)
+    def environment=(environment)
       @environment = environment.to_sym
     end
 

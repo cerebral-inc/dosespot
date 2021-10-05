@@ -1,5 +1,5 @@
 RSpec.shared_examples_for 'an update action' do
-  include_context 'with sandbox configuration'
+  include_context 'with staging configuration'
 
   let(:attributes) do
     {

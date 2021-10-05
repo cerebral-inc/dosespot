@@ -28,8 +28,10 @@ In a Rails app, this might go in `config/initializers/dosespot.rb` for example.
 
 ```ruby
 Dosespot.configure do |config|
-  config.environment = Rails.env.production? ? :production : :sandbox
+  config.environment = Rails.env.production? ? :production : :staging
   config.api_key = ENV['DOSESPOT_API_KEY']
+  config.clinic_id = ENV['DOSESPOT_CLINIC_ID']
+  config.default_pharmacy_id = ENV['DOSESPOT_DEFAULT_PHARMACY_ID']
 end
 ```
 
