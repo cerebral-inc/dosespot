@@ -17,7 +17,7 @@ RSpec.shared_examples_for 'an update action' do
       Regexp.escape("webapi/api/#{resource_base_path}/#{attributes[:id]}")
     )
 
-    stub_request(:patch, request_path).
+    stub_request(:post, request_path).
       with(body: attributes).
       to_return(
         body: attributes.to_json,

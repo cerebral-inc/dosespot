@@ -16,8 +16,6 @@ module Dosespot
     include HTTParty
     debug_output
 
-    base_uri base_api_url
-
     class RequestError < StandardError; end
 
     attr_reader :last_response, :clinician_id
@@ -58,7 +56,7 @@ module Dosespot
       end
       options.merge!(headers: request_headers(data))
 
-      @last_response = self.class.public_send(method, "api/#{url}", options)
+      @last_response = self.class.public_send(method, "#{base_api_url}api/#{url}", options)
 
       if last_response.code == 401
         raise ::Dosespot::AuthError, 'The token is invalid'
@@ -71,10 +69,6 @@ module Dosespot
     MULTIPART_CONTENT_TYPE = 'multipart/form-data'
 
     def validate(path)
-      if config.api_key.blank?
-        raise ::Dosespot::AccessTokenNotPresentError, "Dosespot access token not present"
-      end
-
       # path must:
       # * not be blank
       # * contain a path besides just "/"
@@ -91,7 +85,7 @@ module Dosespot
       # Attempt to authenticate up to 3 times
       last_error = nil
       (0..2).each do |i|
-        token_response = self.class.post '/token', access_token_options
+        token_response = self.class.post "#{base_api_url}token", access_token_options
         unless token_response.code == 200
           raise RequestError.new(token_response.body)
         end
@@ -108,7 +102,7 @@ module Dosespot
     def access_token_options
       {
         basic_auth: {
-          username: config.clinic_id,
+          username: Dosespot.configuration.clinic_id,
           password: encryption_service.encrypted_clinic_id
         },
         headers: access_token_headers,
@@ -142,14 +136,12 @@ module Dosespot
       }
     end
 
+    def base_api_url
+      "https://#{Dosespot.configuration.api_domain}/webapi/"
+    end
+
     def encryption_service
       @encryption_service ||= Dosespot::Encryption.new
     end
-
-    def self.base_api_url
-      "https://#{config.api_domain}/webapi/"
-    end
-
   end
-
 end

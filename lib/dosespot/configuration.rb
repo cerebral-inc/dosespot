@@ -32,7 +32,7 @@ module Dosespot
     end
 
     def api_domain
-      config.production? ? 'my.dosespot.com' : 'my.staging.dosespot.com'
+      production? ? 'my.dosespot.com' : 'my.staging.dosespot.com'
     end
 
   end

@@ -8,11 +8,13 @@ module Dosespot
       # the method name is a bit misleading
       # api_key is connected to a clinic
       # so we don't encrypt the clinic_id itself, but we encrypt the related api_key
-      random_string + encode(random_string + config.api_key)
+      random_string + encode(random_string + Dosespot.configuration.api_key.to_s)
     end
 
     def encrypted_user_id(clinician_id)
-      encode clinician_id.to_s + random_string[0..21] + config.api_key
+      encode clinician_id.to_s +
+        random_string[0..21] +
+        Dosespot.configuration.api_key.to_s
     end
 
     protected

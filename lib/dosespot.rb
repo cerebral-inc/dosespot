@@ -1,8 +1,10 @@
 # order matters
 require "dosespot/configuration"
+require "dosespot/encryption"
 require "dosespot/request"
 require "dosespot/restful_resource"
 require "dosespot/response"
+require "dosespot/link_builder"
 require "dosespot/version"
 
 resources_path = File.expand_path('dosespot/resources/*.rb', File.dirname(__FILE__))
