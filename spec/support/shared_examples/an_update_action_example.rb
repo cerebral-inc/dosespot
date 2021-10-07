@@ -14,7 +14,7 @@ RSpec.shared_examples_for 'an update action' do
 
   before do
     request_path = Regexp.new(
-      Regexp.escape("v1/#{resource_base_path}/#{attributes[:id]}")
+      Regexp.escape("webapi/api/#{resource_base_path}/#{attributes[:id]}")
     )
 
     stub_request(:patch, request_path).

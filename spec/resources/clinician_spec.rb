@@ -1,7 +1,7 @@
-RSpec.describe Dosespot::Resources::Patient do
+RSpec.describe Dosespot::Resources::Clinician do
   include_context 'with staging configuration'
 
-  let(:resource_base_path) { "patients" }
+  let(:resource_base_path) { "clinicians" }
   let(:arguments) { [] }
 
   it_behaves_like 'a create action'

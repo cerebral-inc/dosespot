@@ -5,15 +5,14 @@ module Dosespot
     LENGTH = 32
 
     def encrypted_clinic_id
-      random_string + encode(random_string + key)
+      # the method name is a bit misleading
+      # api_key is connected to a clinic
+      # so we don't encrypt the clinic_id itself, but we encrypt the related api_key
+      random_string + encode(random_string + config.api_key)
     end
 
     def encrypted_user_id(clinician_id)
-      encode clinician_id.to_s + random_string[0..21] + key
-    end
-
-    def clinic_id
-      config.clinic_id
+      encode clinician_id.to_s + random_string[0..21] + config.api_key
     end
 
     protected
@@ -27,10 +26,6 @@ module Dosespot
     def encode(string)
       sha512 = OpenSSL::Digest.new('SHA512').digest string
       Base64.encode64(sha512).delete("\n").gsub(/=*$/, '')
-    end
-
-    def key
-      config.api_key
     end
   end
 end

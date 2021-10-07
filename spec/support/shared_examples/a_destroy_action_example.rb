@@ -7,7 +7,7 @@ RSpec.shared_examples_for 'a destroy action' do
 
   before do
     request_path = Regexp.new(
-      Regexp.escape("v1/#{resource_base_path}/#{entity_id}")
+      Regexp.escape("webapi/api/#{resource_base_path}/#{entity_id}")
     )
 
     stub_request(:delete, request_path).to_return(status: 204)

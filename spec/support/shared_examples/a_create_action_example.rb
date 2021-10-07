@@ -10,7 +10,7 @@ RSpec.shared_examples_for 'a create action' do
   before do
     response_body = attributes.merge(id: 'some_id').to_json
     request_path = Regexp.new(
-      Regexp.escape("v1/#{resource_base_path}")
+      Regexp.escape("webapi/api/#{resource_base_path}")
     )
 
     stub_request(:post, request_path).

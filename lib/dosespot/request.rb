@@ -27,14 +27,14 @@ module Dosespot
     end
 
     def get(path)
-      perform_checks(path)
+      validate(path)
       response = send_authenticated(__callee__, path)
       Response.new(response)
     end
     alias_method :delete, :get
 
     def post(path, data = {})
-      perform_checks(path)
+      validate(path)
       response = send_authenticated(__callee__, path, data)
       Response.new(response)
     end
@@ -58,9 +58,7 @@ module Dosespot
       end
       options.merge!(headers: request_headers(data))
 
-      @last_response = self.class.public_send(
-        method, url, options
-      )
+      @last_response = self.class.public_send(method, "api/#{url}", options)
 
       if last_response.code == 401
         raise ::Dosespot::AuthError, 'The token is invalid'
@@ -72,8 +70,8 @@ module Dosespot
     JSON_CONTENT_TYPE = 'application/json'
     MULTIPART_CONTENT_TYPE = 'multipart/form-data'
 
-    def perform_checks(path)
-      if Dosespot.configuration.api_key.blank?
+    def validate(path)
+      if config.api_key.blank?
         raise ::Dosespot::AccessTokenNotPresentError, "Dosespot access token not present"
       end
 
@@ -136,6 +134,7 @@ module Dosespot
 
     def request_headers(data = {})
       content_type = data[:multipart] ? MULTIPART_CONTENT_TYPE : JSON_CONTENT_TYPE
+
       {
         'Content-Type' => content_type,
         'charset' => 'utf-8',
@@ -144,13 +143,11 @@ module Dosespot
     end
 
     def encryption_service
-      @encryption_service ||= Dosespot::EncryptionService.new
+      @encryption_service ||= Dosespot::Encryption.new
     end
 
     def self.base_api_url
-      api_domain = config.production? ? 'my.dosespot.com' : 'my.staging.dosespot.com'
-
-      "https://#{api_domain}/webapi/"
+      "https://#{config.api_domain}/webapi/"
     end
 
   end

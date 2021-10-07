@@ -31,6 +31,10 @@ module Dosespot
       @environment = environment.to_sym
     end
 
+    def api_domain
+      config.production? ? 'my.dosespot.com' : 'my.staging.dosespot.com'
+    end
+
   end
 
 end

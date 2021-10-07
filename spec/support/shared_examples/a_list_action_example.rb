@@ -16,7 +16,7 @@ RSpec.shared_examples_for 'a list action' do
       results: [attributes]
     }.to_json
     request_path = Regexp.new(
-      Regexp.escape("v1/#{resource_base_path}")
+      Regexp.escape("webapi/api/#{resource_base_path}")
     )
 
     stub_request(:get, request_path).

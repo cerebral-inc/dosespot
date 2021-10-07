@@ -12,8 +12,7 @@ module Dosespot
     protected
 
     def list(params = {})
-      path = path_with_params(resource_base, params)
-      get(path)
+      get(path_with_params(resource_base, params))
     end
 
     def create(data)
@@ -28,16 +27,12 @@ module Dosespot
       delete(resource_path(id))
     end
 
-    def replace(id, data)
-      put(resource_path(id), data)
-    end
-
     def update(id, data)
-      patch(resource_path(id), data)
+      post(resource_path(id), data)
     end
 
     def resource_base
-      self.class.name.demodulize.underscore
+      self.class.name.demodulize.underscore.pluralize
     end
 
     def resource_path(id)

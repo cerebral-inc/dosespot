@@ -1,17 +1,15 @@
 module Dosespot
   module Resources
     class Patient < RestfulResource
-      public :list, :read
+      public :create, :update, :read
 
-      def create(data)
-        put(resource_base, data)
+      def search(data)
+        get("#{resource_base}/search", data)
       end
 
-      def get_prescriptions(data)
-        path = "#{resource_path(data)}/prescriptions"
-        get(path)
+      def find_prescriptions(id, data = {})
+        get("#{resource_path(id)}/prescriptions", data)
       end
-
     end
   end
 end
