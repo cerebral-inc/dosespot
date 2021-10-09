@@ -11,6 +11,7 @@ module Dosespot
 
     attr_reader :response
     delegate :body, :code, :message, :headers, :parsed_response, to: :response
+    delegate :[], to: :parsed_response
 
     def initialize(response)
       @response = response
