@@ -15,14 +15,14 @@ module Dosespot
     protected
 
     def base_url
-      "https://#{config.api_domain}/LoginSingleSignOn.aspx"
+      "https://#{Dosespot.configuration.api_domain}/LoginSingleSignOn.aspx"
     end
 
     def base_params
       {
         b: 2,
-        PharmacyId: config.default_pharmacy_id,
-        SingleSignOnClinicId: config.clinic_id,
+        PharmacyId: Dosespot.configuration.default_pharmacy_id,
+        SingleSignOnClinicId: Dosespot.configuration.clinic_id,
         SingleSignOnUserId: clinician_id,
         SingleSignOnPhraseLength: Dosespot::Encryption::LENGTH,
         SingleSignOnCode: sso_code,
