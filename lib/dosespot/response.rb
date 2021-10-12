@@ -10,8 +10,8 @@ module Dosespot
   class Response
 
     attr_reader :response
-    delegate :body, :code, :message, :headers, :parsed_response, to: :response
-    delegate :[], to: :parsed_response
+    delegate :body, :code, :message, :headers, :parsed_response, to: :response, allow_nil: true
+    delegate :[], to: :parsed_response, allow_nil: true
 
     def initialize(response)
       @response = response
