@@ -34,7 +34,5 @@ module Dosespot
     def api_domain
       production? ? 'my.dosespot.com' : 'my.staging.dosespot.com'
     end
-
   end
-
 end
