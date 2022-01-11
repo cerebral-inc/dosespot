@@ -18,22 +18,22 @@ module Dosespot
     end
 
     def success?
-      %w(success processed).include?(data[:status]) || !error?
+      code.to_i / 100 == 2 && data['Result']["ResultCode"] == "OK"
     rescue => e
       false
     end
 
     def error?
-      code.to_i / 100 != 2 || data[:statusCode] == 400
-    rescue => e
-      true
+      !success?
     end
 
     def errors
-      return ["Invalid response: #{body}"] unless data.is_a?(Hash)
-      data[:validation_errors]&.map do |error_data|
-        "#{error_data[:key]} #{error_data[:message]}"
-      end
+      errors_list = []
+
+      errors_list << ["Bad response code: #{code}"] unless code.to_i / 100 == 2
+      errors_list << ["Invalid response: #{body}"] unless data.is_a?(Hash)
+
+      errors_list
     end
 
     def error_message
@@ -56,7 +56,5 @@ module Dosespot
       # if the server sends an invalid response
       body
     end
-
   end
-
 end
