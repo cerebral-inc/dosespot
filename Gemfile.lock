@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     dosespot (0.0.2)
-      activesupport (~> 5.2.4)
-      httparty (~> 0.18)
+      activesupport (>= 5.2.4, < 7.0)
+      httparty (>= 0.18)
 
 GEM
   remote: https://rubygems.org/
@@ -71,6 +71,8 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
+  ruby
+  x86_64-darwin-19
   x86_64-linux
 
 DEPENDENCIES
