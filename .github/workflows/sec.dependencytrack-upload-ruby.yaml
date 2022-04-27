@@ -1,0 +1,32 @@
+## DO NOT EDIT
+## THIS FILE IS SOURCED FROM https://github.com/cerebral-inc/cerebral-shared-actions
+## ANY LOCAL CHANGES WILL BE OVERWRITTEN
+
+name: Generate CycloneDX SBOM and upload to Dependency-Track
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Cyclonedx-ruby from RubyGems 
+        run: sudo gem install cyclonedx-ruby 
+      - name: Run Cyclonedx-ruby and generate SBOMs
+        run: sudo cyclonedx-ruby -p ./ 
+
+      - name: Upload BOM to Dependency-Track
+        uses: DependencyTrack/gh-upload-sbom@v1.0.0
+        with:
+          serverhostname: 'dependencytrack-api.cerebral.com'
+          apikey: ${{ secrets.DT_API_KEY }}
+          projectname: ${{ github.repository }}
+          projectversion: ${{ github.sha }}
+          autocreate: 'true'
+          
