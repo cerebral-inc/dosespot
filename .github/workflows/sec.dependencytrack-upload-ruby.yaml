@@ -21,7 +21,7 @@ jobs:
       - name: Run Cyclonedx-ruby and generate SBOMs
         run: sudo cyclonedx-ruby -p ./ 
 
-      - name: Upload BOM to Dependency-Track
+      - name: Upload SBOM to Dependency-Track
         uses: DependencyTrack/gh-upload-sbom@v1.0.0
         with:
           serverhostname: 'dependencytrack-api.cerebral.com'
