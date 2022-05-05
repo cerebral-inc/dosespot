@@ -27,6 +27,6 @@ jobs:
           serverhostname: 'dependencytrack-api.cerebral.com'
           apikey: ${{ secrets.DT_API_KEY }}
           projectname: ${{ github.repository }}
-          projectversion: ${{ github.sha }}
+          projectversion: 'master'
           autocreate: 'true'
           
